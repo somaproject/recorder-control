@@ -1,0 +1,51 @@
+#!/usr/bin/env python
+
+import sys
+import pygtk
+pygtk.require("2.0")
+import gtk
+import gtk.glade
+import dbus
+import dbus.mainloop.glib
+import gobject
+
+from somarecordercontrol.proxy.mock.epoch import Epoch
+
+from somarecordercontrol import datatab
+from somarecordercontrol import notesgui
+from somarecordercontrol import status
+from somarecordercontrol import util
+
+
+from somarecordercontrol.epochproperty import EpochProperty
+from somarecordercontrol.experimentproperty import ExperimentProperty
+from somarecordercontrol.recorderapp import RecorderApp
+
+from optparse import OptionParser
+
+       
+if __name__ == "__main__":
+
+    parser = OptionParser()
+    parser.add_option("-m", "--mock", dest="mock", action="store_true",
+                      default=False, 
+                      help="use non-DBus mock object")
+
+    (options, args) = parser.parse_args(sys.argv)
+
+    if options.mock:
+        from somarecordercontrol.proxy.mock.recorder import Recorder
+        recorderobj = Recorder()
+    else:
+        from somarecordercontrol.proxy.dbus.recorder import Recorder
+
+        dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
+
+        bus = dbus.SessionBus()
+        robj = bus.get_object('soma.recording.Recorder', 
+                              '/soma/recording/recorder')
+
+        recorderobj = Recorder(bus, robj)
+        
+    app = RecorderApp(recorderobj)
+    gtk.main()
