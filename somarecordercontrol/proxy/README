@@ -1,0 +1,14 @@
+Due to both abstraction concerns, caching, and testing, we are
+manually creating a layer of objects between our introspection-based
+DBUS objects and our application. They also handle turning a returned
+connection into a new proxy object.
+
+Requirements:
+   Be able to substitute (with no apparent loss of GUI functionality)
+   local in-process python objects. 
+
+   Have method names and semantics that match the underlying dbus interface
+   as much as possible. 
+
+   Handle a lot of the DBUS nasty bits, like object/bus lookup, etc.
+   
