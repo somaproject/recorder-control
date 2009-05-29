@@ -1,3 +1,4 @@
+import dbus
 
 class Note(object):
     def __init__(self, NID):
