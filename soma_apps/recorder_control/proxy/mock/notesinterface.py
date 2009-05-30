@@ -66,12 +66,12 @@ class Notes(object):
         note.tags = taglist
         note.name = name
         
-        self.emit("notechange", handle, len(self.notes))
+        self.emit("NoteChange", handle, len(self.notes))
         
 
     def DeleteNote(self, handle):
         
-        self.emit("notechange", handle, len(self.notes))    
+        self.emit("NoteChange", handle, len(self.notes))    
         raise "not Implemented", "foo" 
 
 

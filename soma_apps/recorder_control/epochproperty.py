@@ -48,9 +48,9 @@ class EpochProperty(object):
                                           self.buttonAddNote,
                                           self.epoch)
         
-        self.epoch.connect("renamed", self.nameChanged)
+        self.epoch.connect("Renamed", self.nameChanged)
 
-        self.epoch.connect("recordingstate", self.recordingStateChanged)
+        self.epoch.connect("RecordingState", self.recordingStateChanged)
 
         self.hasRecorded = False
         self.updateName()

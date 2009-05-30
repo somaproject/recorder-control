@@ -174,7 +174,7 @@ class NotesGUI(object):
         self.buttonAddNote = addbutton
         self.noteIFObj = noteIFObj
         self.buttonAddNote.connect('clicked', self.on_buttonAddNote_clicked)
-        self.noteIFObj.connect("notechange", self.noteChangeCallback)
+        self.noteIFObj.connect("NoteChange", self.noteChangeCallback)
         
         self.vboxNotes.show_all()
 

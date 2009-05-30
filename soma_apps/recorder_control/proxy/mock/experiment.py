@@ -8,7 +8,7 @@ class Experiment(gobject.GObject, notesinterface.Notes):
                                       (gobject.TYPE_OBJECT,)),
                      'NoteChange': (gobject.SIGNAL_RUN_FIRST,
                                     gobject.TYPE_NONE,
-                                    (gobject.TYPE_INT, gobject.TYPE_INT))
+                                    (gobject.TYPE_INT, gobject.TYPE_INT)),
                      'ReferenceTimeChange': (gobject.SIGNAL_RUN_FIRST,
                                              gobject.TYPE_NONE,
                                              (gobject.TYPE_UINT64,))
@@ -27,7 +27,7 @@ class Experiment(gobject.GObject, notesinterface.Notes):
         for i in xrange(64):
            self._datasources.append((i, True, [], "SOURCE%2.2d" % i))
         
-        self.notes = []re
+        self.notes = []
 
         self.properties = {"user" : "jonas",
                            "create" : "2008-01-01 22:33"}

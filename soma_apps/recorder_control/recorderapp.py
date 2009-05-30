@@ -10,16 +10,16 @@ import dbus
 import dbus.mainloop.glib
 import gobject
 
-from somarecordercontrol.proxy.mock.epoch import Epoch
+from soma_apps.recorder_control.proxy.mock.epoch import Epoch
 
-from somarecordercontrol import datatab
-from somarecordercontrol import notesgui
-from somarecordercontrol import status
-from somarecordercontrol import util
+from soma_apps.recorder_control import datatab
+from soma_apps.recorder_control import notesgui
+from soma_apps.recorder_control import status
+from soma_apps.recorder_control import util
 
 
-from somarecordercontrol.epochproperty import EpochProperty
-from somarecordercontrol.experimentproperty import ExperimentProperty
+from soma_apps.recorder_control.epochproperty import EpochProperty
+from soma_apps.recorder_control.experimentproperty import ExperimentProperty
 
 from optparse import OptionParser
 
@@ -74,7 +74,7 @@ class RecorderApp(object):
     def experimentAvailable(self, recorder, exp):
         
         ep = ExperimentProperty(exp)
-        exp.connect('epochcreate', self.epochCreate)
+        exp.connect('EpochCreate', self.epochCreate)
         self.propertyPanes[exp] = ep
 
         self.treestore.append(None, (exp, exp.GetName(), False))
@@ -281,7 +281,7 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args(sys.argv)
 
     if options.mock:
-        from somarecordercontrol.proxy.mock.recorder import Recorder
+        from soma_apps.recorder_control.proxy.mock.recorder import Recorder
         recorderobj = Recorder()
     else:
         from proxy.dbus.recorder import Recorder

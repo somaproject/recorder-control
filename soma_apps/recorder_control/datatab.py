@@ -84,7 +84,7 @@ class EpochDataTab(object):
 
         self.updateEntireModel()
 
-        self.epoch.connect("sinkchange", self.sinkChangeCallback)
+        self.epoch.connect("SinkChange", self.sinkChangeCallback)
         
     def setEditable(self, isEditable):
         # sets the editable state

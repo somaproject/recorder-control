@@ -20,20 +20,20 @@ class Epoch(gobject.GObject, Notes):
 
     """
     
-    __gsignals__ = { 'renamed': (gobject.SIGNAL_RUN_FIRST,
+    __gsignals__ = { 'Renamed': (gobject.SIGNAL_RUN_FIRST,
                                      gobject.TYPE_NONE,
                                      (gobject.TYPE_STRING,)),
-                     'recordingstate': (gobject.SIGNAL_RUN_FIRST,
+                     'RecordingState': (gobject.SIGNAL_RUN_FIRST,
                                         gobject.TYPE_NONE,
                                         (gobject.TYPE_BOOLEAN,)), 
-                     'sinkchange': (gobject.SIGNAL_RUN_FIRST,
+                     'SinkChange': (gobject.SIGNAL_RUN_FIRST,
                                         gobject.TYPE_NONE,
                                         (gobject.TYPE_INT,)),
 
                      # not entirely happy with tihs signal -- first argument
                      # is the specific handle of the note that might have
                      # changed, second is total number of notes
-                     'notechange': (gobject.SIGNAL_RUN_FIRST,
+                     'NoteChange': (gobject.SIGNAL_RUN_FIRST,
                                         gobject.TYPE_NONE,
                                         (gobject.TYPE_INT, gobject.TYPE_INT))
                      }
@@ -87,7 +87,7 @@ class Epoch(gobject.GObject, Notes):
         self.parent.recordingEpoch = self
         self.parent.state = True
             
-        self.emit("recordingstate", True)
+        self.emit("RecordingState", True)
 
     def StopRecording(self):
         """
@@ -100,13 +100,13 @@ class Epoch(gobject.GObject, Notes):
 
         self.parent.recordingEpoch = None
         
-        self.emit("recordingstate", False)
+        self.emit("RecordingState", False)
         
 
     
     def setName(self, name):
         self.name = name
-        self.emit("renamed", name)
+        self.emit("Renamed", name)
         
 
 
@@ -118,14 +118,14 @@ class Epoch(gobject.GObject, Notes):
 
         self.datasinks.add((src, typ))
         
-        self.emit("sinkchange", src)
+        self.emit("SinkChange", src)
 
 
     def DisableDataSink(self, src, typ):
         """
         """
         self.datasinks.remove((src, typ))
-        self.emit("sinkchange", src)
+        self.emit("SinkChange", src)
         
 
     def GetDataSinks(self):
@@ -151,7 +151,7 @@ class Epoch(gobject.GObject, Notes):
 
         """
         self.datasinknames[src] = name
-        self.emit("sinkchange", src)
+        self.emit("SinkChange", src)
 
 
     def GetDataName(self, src):
