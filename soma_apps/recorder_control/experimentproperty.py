@@ -6,7 +6,6 @@ import gtk
 import gtk.glade
 import pdb
 from proxy.mock.epoch import Epoch
-from proxy.mock.recorder import Recorder
 from treemodel import RecorderTreeModel
 import datatab
 import notesgui

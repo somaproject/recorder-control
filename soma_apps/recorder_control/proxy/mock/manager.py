@@ -3,11 +3,11 @@ import gobject
 from experiment import Experiment
 import time
 
-class Recorder(gobject.GObject):
-    __gsignals__ = { 'experimentavailable': (gobject.SIGNAL_RUN_FIRST,
+class Manager(gobject.GObject):
+    __gsignals__ = { 'ExperimentAvailable': (gobject.SIGNAL_RUN_FIRST,
                                            gobject.TYPE_NONE,
                                            (gobject.TYPE_OBJECT,)), 
-                     'statsupdate': (gobject.SIGNAL_RUN_FIRST,
+                     'StatsUpdate': (gobject.SIGNAL_RUN_FIRST,
                                      gobject.TYPE_NONE,
                                      tuple()) }
 
@@ -35,10 +35,7 @@ class Recorder(gobject.GObject):
         Returns the list of all availabe open experiments,
         by connection
         """
-        return [v for k, v in self.experiments.iteritems()]
-    
-    def GetName(self):
-        return "HIMYNAMEIS"
+        return self.experiments.values() # [v for k, v in self.experiments.iteritems()]
     
     def ListAvailableExperiments(self):
         """
@@ -61,7 +58,7 @@ class Recorder(gobject.GObject):
         
         e = Experiment(self, str(name))
         self.experiments[name] = e
-        self.emit('experimentavailable', e)
+        self.emit('ExperimentAvailable', e)
         return e
 
     def GetStatistics(self):
@@ -85,17 +82,12 @@ class Recorder(gobject.GObject):
         Return a string representing this connection
         """
 
-
-        
-                
     # ----------------------------------------------------------------
     # Implementation specific
     # ----------------------------------------------------------------    
         
-        
-        
     def updateTime(self):
         self.stats["time"] =  str(time.time())
-        self.emit("statsupdate")
+        self.emit("StatsUpdate")
         
         return True

@@ -8,18 +8,19 @@ import gtk.glade
 import dbus
 import dbus.mainloop.glib
 import gobject
+import soma_apps
 
-from somarecordercontrol.proxy.mock.epoch import Epoch
+from soma_apps.recorder_control.proxy.mock.epoch import Epoch
 
-from somarecordercontrol import datatab
-from somarecordercontrol import notesgui
-from somarecordercontrol import status
-from somarecordercontrol import util
+from soma_apps.recorder_control import datatab
+from soma_apps.recorder_control import notesgui
+from soma_apps.recorder_control import status
+from soma_apps.recorder_control import util
 
 
-from somarecordercontrol.epochproperty import EpochProperty
-from somarecordercontrol.experimentproperty import ExperimentProperty
-from somarecordercontrol.recorderapp import RecorderApp
+from soma_apps.recorder_control.epochproperty import EpochProperty
+from soma_apps.recorder_control.experimentproperty import ExperimentProperty
+from soma_apps.recorder_control.recorderapp import RecorderApp
 
 from optparse import OptionParser
 
@@ -34,10 +35,10 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args(sys.argv)
 
     if options.mock:
-        from somarecordercontrol.proxy.mock.recorder import Recorder
-        recorderobj = Recorder()
+        from soma_apps.recorder_control.proxy.mock.manager import Manager
+        recorderobj = Manager()
     else:
-        from somarecordercontrol.proxy.dbus.recorder import Recorder
+        from soma_apps.recorder_control.proxy.dbus.manager import Manager
 
         dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
@@ -45,7 +46,7 @@ if __name__ == "__main__":
         robj = bus.get_object('soma.recording.Recorder', 
                               '/soma/recording/recorder')
 
-        recorderobj = Recorder(bus, robj)
+        recorderobj = Manager(bus, robj)
         
     app = RecorderApp(recorderobj)
     gtk.main()

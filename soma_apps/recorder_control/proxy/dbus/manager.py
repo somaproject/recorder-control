@@ -14,12 +14,12 @@ def getRecorder():
 
     """
 
-class Recorder(gobject.GObject):
+class Manager(gobject.GObject):
 
-    __gsignals__ = { 'experimentavailable': (gobject.SIGNAL_RUN_FIRST,
+    __gsignals__ = { 'ExperimentAvailable': (gobject.SIGNAL_RUN_FIRST,
                                            gobject.TYPE_NONE,
                                            (gobject.TYPE_OBJECT,)), 
-                     'statsupdate': (gobject.SIGNAL_RUN_FIRST,
+                     'StatsUpdate': (gobject.SIGNAL_RUN_FIRST,
                                      gobject.TYPE_NONE,
                                      tuple()) }
 
@@ -31,7 +31,7 @@ class Recorder(gobject.GObject):
         self.remoteObject = remoteObject
 
         self.dbusRecorderIface = dbus.Interface(remoteObject,
-                                                "soma.recording.Recorder")
+                                                "soma.recording.Manager")
         
         self.expcache = {}
 
@@ -44,7 +44,7 @@ class Recorder(gobject.GObject):
 
         self.timer_id = gobject.timeout_add(1000, self.updateTime)
 
-        self.dbusRecorderIface.connect_to_signal("experimentavailable",
+        self.dbusRecorderIface.connect_to_signal("ExperimentAvailable",
                                                  self.expAvailableCallBack)
         
     def ListOpenExperiments(self):

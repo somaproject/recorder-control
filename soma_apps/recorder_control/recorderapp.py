@@ -44,8 +44,8 @@ class RecorderApp(object):
         self.setupEpochs()
 
         # now connect the new-experiment and new-epoch widgets
-        self.recorder.connect('experimentavailable', self.experimentAvailable)
-        self.recorder.connect('statsupdate', self.statsupdate)
+        self.recorder.connect('ExperimentAvailable', self.experimentAvailable)
+        self.recorder.connect('StatsUpdate', self.statsupdate)
         self.window = self.wTree.get_widget(self.windowname)
 
         self.window.connect("destroy", self.destroy)

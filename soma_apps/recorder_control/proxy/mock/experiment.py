@@ -3,12 +3,15 @@ import gobject
 import notesinterface
 
 class Experiment(gobject.GObject, notesinterface.Notes):
-    __gsignals__ = { 'epochcreate': (gobject.SIGNAL_RUN_FIRST,
+    __gsignals__ = { 'EpochCreate': (gobject.SIGNAL_RUN_FIRST,
                                       gobject.TYPE_NONE,
                                       (gobject.TYPE_OBJECT,)),
-                     'notechange': (gobject.SIGNAL_RUN_FIRST,
+                     'NoteChange': (gobject.SIGNAL_RUN_FIRST,
                                     gobject.TYPE_NONE,
                                     (gobject.TYPE_INT, gobject.TYPE_INT))
+                     'ReferenceTimeChange': (gobject.SIGNAL_RUN_FIRST,
+                                             gobject.TYPE_NONE,
+                                             (gobject.TYPE_UINT64,))
                      }
 
     
@@ -24,7 +27,7 @@ class Experiment(gobject.GObject, notesinterface.Notes):
         for i in xrange(64):
            self._datasources.append((i, True, [], "SOURCE%2.2d" % i))
         
-        self.notes = []
+        self.notes = []re
 
         self.properties = {"user" : "jonas",
                            "create" : "2008-01-01 22:33"}
@@ -34,6 +37,8 @@ class Experiment(gobject.GObject, notesinterface.Notes):
 
         self.ts = 1000
         self.time = 10000000
+        self.referenceTime = 0
+        
         
     def GetFileProperties(self):
         """
@@ -66,7 +71,7 @@ class Experiment(gobject.GObject, notesinterface.Notes):
         e = Epoch(self, name)
         self._epochsOrdered.append(e)
         self._epochs[name] = e
-        self.emit("epochcreate", e)
+        self.emit("EpochCreate", e)
         return e
 
     def RenameEpoch(self, epoch, name):
@@ -95,6 +100,14 @@ class Experiment(gobject.GObject, notesinterface.Notes):
         return "mock object, no dbus path"
 
         
-        
+    def GetReferenceTimeStamp(self):
+        return self.referenceTS
     
 
+    def SetReferenceTimeStamp(self, ts):
+        self.referenceTS = ts
+        
+        self.emit("ReferenceTimeChange", e)
+
+    
+    
